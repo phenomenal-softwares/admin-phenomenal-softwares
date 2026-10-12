@@ -1,0 +1,266 @@
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 21px;
+}
+
+.metric-card {
+  position: relative;
+  display: grid;
+  min-height: 142px;
+  align-content: start;
+  gap: 11px;
+  padding: 20px 22px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.metric-card__label {
+  color: #777f78;
+  font-size: 12px;
+  font-weight: 550;
+}
+
+.metric-card__value {
+  color: var(--ink);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.metric-card__value--small {
+  font-size: 18px;
+  letter-spacing: -.4px;
+}
+
+.metric-card__hint {
+  color: #939d96;
+  font-size: 10px;
+}
+
+.metric-card__icon {
+  position: absolute;
+  top: 21px;
+  right: 20px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 9px;
+  color: var(--kiwi);
+  background: var(--kiwi-light);
+  font-size: 19px;
+}
+
+.metric-card__icon--green {
+  color: var(--success);
+  background: var(--success-light);
+}
+
+.welcome-card {
+  position: relative;
+  display: flex;
+  min-height: 240px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 38px;
+  overflow: hidden;
+  border-radius: 11px;
+  color: #fff;
+  background: linear-gradient(110deg, #076d63, #078577 65%, #19a08b);
+}
+
+.welcome-card__copy {
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-card h2 {
+  margin: 10px 0 8px;
+  color: #fff;
+  font-size: 24px;
+  letter-spacing: -.65px;
+  line-height: 1.2;
+}
+
+.welcome-card p {
+  max-width: 360px;
+  margin: 0 0 17px;
+  color: #e0f2e8;
+  font-size: 11px;
+}
+
+.welcome-card .button {
+  min-height: 35px;
+  padding: 0 13px;
+  font-size: 11px;
+}
+
+.welcome-card__art {
+  position: relative;
+  width: 260px;
+  height: 185px;
+  margin-right: 23px;
+}
+
+.art-card {
+  position: absolute;
+  width: 122px;
+  height: 144px;
+  border: 1px solid rgba(255, 255, 255, .36);
+  border-radius: 13px;
+  background: linear-gradient(145deg, rgba(255,255,255,.19), rgba(255,255,255,.04));
+  box-shadow: 0 18px 42px rgba(4, 52, 42, .17);
+  transform: rotate(12deg);
+}
+
+.art-card--back {
+  top: 13px;
+  left: 65px;
+  transform: rotate(-12deg);
+}
+
+.art-card--front {
+  top: 25px;
+  left: 112px;
+  padding: 15px;
+  box-sizing: border-box;
+  transform: rotate(8deg);
+}
+
+.art-card--front span {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  margin-bottom: 17px;
+  border-radius: 10px;
+  color: var(--kiwi);
+  background: #fff;
+  font-size: 19px;
+}
+
+.art-card--front i {
+  display: block;
+  width: 77px;
+  height: 5px;
+  margin: 7px 0;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .58);
+}
+
+.art-card--front i:last-child {
+  width: 52px;
+  background: rgba(255, 255, 255, .35);
+}
+
+.art-spark {
+  position: absolute;
+  color: #d9efb1;
+  font-size: 20px;
+}
+
+.art-spark--one {
+  top: 15px;
+  right: 20px;
+}
+
+.art-spark--two {
+  bottom: 11px;
+  left: 26px;
+  font-size: 25px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 27px 0 12px;
+}
+
+.section-heading h2,
+.table-toolbar h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: -.15px;
+}
+
+.section-heading p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.quick-start-card {
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  gap: 15px;
+  padding: 13px 17px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+}
+
+.quick-start-card__number {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--kiwi-dark);
+  background: var(--kiwi-light);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.quick-start-card strong {
+  color: #343c50;
+  font-size: 11px;
+}
+
+.quick-start-card p {
+  margin: 3px 0 0;
+  color: #909a92;
+  font-size: 10px;
+}
+
+.text-button {
+  margin-left: auto;
+  padding: 8px 2px 8px 10px;
+  border: 0;
+  color: var(--kiwi-dark);
+  background: transparent;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+  .welcome-card {
+    padding-right: 24px;
+    padding-left: 28px;
+  }
+
+  .welcome-card__art {
+    margin-right: -4px;
+    transform: scale(.82);
+    transform-origin: center right;
+  }
+}
+
+@media (max-width: 850px) {
+  .welcome-card__art {
+    width: 190px;
+    margin-right: -20px;
+    transform: scale(.7);
+  }
+}

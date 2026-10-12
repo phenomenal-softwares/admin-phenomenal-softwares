@@ -1,0 +1,16 @@
+:root {
+  --kiwi: #078577;
+  --kiwi-dark: #056d63;
+  --kiwi-deep: #073b37;
+  --kiwi-bright: #c2e76b;
+  --kiwi-light: #eaf5ce;
+  --canvas: #f5f8f4;
+  --ink: #243831;
+  --muted: #75857d;
+  --line: #e1e9e1;
+  --white: #fff;
+  --danger: #bd4c4a;
+  --danger-light: #fff0ed;
+  --success: #26764d;
+  --success-light: #eaf6e9;
+}

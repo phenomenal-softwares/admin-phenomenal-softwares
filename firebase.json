@@ -1,0 +1,11 @@
+{
+  "firestore": [
+    {
+      "database": "phenomenal-softwares",
+      "rules": "firestore.rules"
+    }
+  ],
+  "storage": {
+    "rules": "storage.rules"
+  }
+}
