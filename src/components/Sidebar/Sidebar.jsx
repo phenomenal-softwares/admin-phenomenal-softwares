@@ -1,4 +1,5 @@
 import logoBanner from '../../assets/logo-banner.png'
+import logoIconYellowBg from '../../assets/phen-logo-eagle-bg-yellow.png'
 import './Sidebar.css'
 
 function Icon({ name }) {
@@ -42,7 +43,7 @@ function Sidebar({ navigation, activePage, onNavigate, onLogout, adminEmail }) {
 
       <div className="sidebar__footer">
         <div className="sidebar__admin">
-          <span className="sidebar__avatar" aria-hidden="true">{adminEmail?.charAt(0).toUpperCase() || 'A'}</span>
+          <span className="sidebar__avatar"><img src={logoIconYellowBg} alt="Phenomenal" /></span>
           <span className="sidebar__admin-info"><strong>Admin</strong><small>{adminEmail}</small></span>
         </div>
         <button className="nav-item nav-item--logout" type="button" onClick={onLogout}>

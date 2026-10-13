@@ -47,9 +47,17 @@
   font-size: 10px;
 }
 
+.product-toolbar__controls {
+  display: flex;
+  width: min(278px, 48%);
+  align-items: center;
+  gap: 8px;
+}
+
 .product-search {
   display: flex;
-  width: min(230px, 45%);
+  min-width: 0;
+  flex: 1;
   height: 34px;
   align-items: center;
   gap: 7px;
@@ -74,6 +82,29 @@
 
 .product-search input::placeholder {
   color: #9aa69d;
+}
+
+.sort-button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #dce5dc;
+  border-radius: 6px;
+  color: #738379;
+  background: #fff;
+  cursor: pointer;
+}
+
+.sort-button:hover {
+  color: var(--kiwi-dark);
+  background: var(--kiwi-light);
+}
+
+.sort-button:focus-visible {
+  outline: 2px solid var(--kiwi-dark);
+  outline-offset: 2px;
 }
 
 .table-scroll {
@@ -163,6 +194,21 @@
 }
 
 .status-pill {
+  color: #66736a;
+  background: #eef1ee;
+}
+
+.status-pill--active-development {
+  color: #315f9b;
+  background: #e6f0ff;
+}
+
+.status-pill--maintenance {
+  color: #855b08;
+  background: #fff1d2;
+}
+
+.status-pill--completed {
   color: var(--success);
   background: var(--success-light);
 }
@@ -254,6 +300,35 @@
   justify-content: space-between;
   padding: 13px 18px;
   border-top: 1px solid #edf0ed;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pagination-controls__button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid #dce5dc;
+  border-radius: 6px;
+  color: #738379;
+  background: #fff;
+  font-size: 12px;
+}
+
+.pagination-controls__button:hover {
+  color: var(--kiwi-dark);
+  background: var(--kiwi-light);
+}
+
+.pagination-controls__button:disabled {
+  color: #cdd4cd;
+  background: #f9faf8;
+  cursor: not-allowed;
 }
 
 .product-detail-backdrop {
@@ -409,6 +484,17 @@
 }
 
 @media (max-width: 600px) {
+  .table-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 20px;
+  }
+
+  .product-toolbar__controls {
+    width: 100%;
+  }
+
   .product-detail-backdrop {
     padding: 10px;
   }

@@ -5,6 +5,7 @@ import DashboardPage from './pages/DashboardPage/DashboardPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 import ProductFormPage from './pages/ProductFormPage/ProductFormPage'
 import ProductsPage from './pages/ProductsPage/ProductsPage'
+import logoIconYellowBg from './assets/phen-logo-eagle-bg-yellow.png'
 import './app/App.css'
 
 const navigation = [
@@ -147,7 +148,7 @@ function AdminWorkspace() {
         <header className="topbar">
           <div className="topbar__breadcrumb">Admin workspace <span>/</span> {navigation.find((item) => item.id === activePage)?.label ?? (activePage === 'edit-product' ? 'Edit product' : 'Dashboard')}</div>
           <div className="topbar__profile">
-            <span className="topbar__avatar" aria-hidden="true">{admin?.email?.charAt(0).toUpperCase() || 'A'}</span>
+            <span className="topbar__avatar"><img src={logoIconYellowBg} alt="Phenomenal" /></span>
             <span>{admin?.email || 'Admin'}</span>
           </div>
         </header>

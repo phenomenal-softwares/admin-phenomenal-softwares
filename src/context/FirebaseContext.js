@@ -9,6 +9,7 @@ import {
   deleteDoc,
   doc,
   onSnapshot,
+  serverTimestamp,
   setDoc,
   updateDoc,
 } from 'firebase/firestore'
@@ -158,7 +159,6 @@ export function FirebaseProvider({ children }) {
         (snapshot) => {
           const products = snapshot.docs
             .map((productDoc) => ({ ...productDoc.data(), id: productDoc.id }))
-            .sort((a, b) => (a.name || '').localeCompare(b.name || ''))
           onProducts(products)
         },
         onError,
@@ -179,6 +179,7 @@ export function FirebaseProvider({ children }) {
           readMe: '',
           ...filePaths,
           id: productRef.id,
+          createdAt: serverTimestamp(),
         })
       } catch (error) {
         try {

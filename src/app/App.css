@@ -47,8 +47,6 @@
 .topbar__avatar {
   width: 30px;
   height: 30px;
-  background: var(--kiwi-light);
-  color: var(--kiwi-dark);
 }
 
 .page {
