@@ -132,7 +132,7 @@ function AdminWorkspace() {
       )
     }
 
-    return <DashboardPage onViewProducts={() => setActivePage('products')} productCount={products.length} />
+    return <DashboardPage onViewProducts={() => setActivePage('products')} productCount={products.length} products={products} />
   }
 
   return (

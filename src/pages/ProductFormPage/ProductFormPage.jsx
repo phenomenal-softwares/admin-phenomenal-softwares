@@ -4,6 +4,26 @@ import "./ProductFormPage.css";
 const MODES = ["frontend", "backend", "full stack"];
 const PLATFORMS = ["Android", "iOS", "web"];
 const STATUSES = ["Active Development", "Completed", "Maintenance", "Archived"];
+const COLOR_KEYS = ["primary", "secondary", "accent", "bg"];
+const DEFAULT_COLORS = {
+  primary: "#4cb051",
+  secondary: "#00bfa5",
+  accent: "#ffca28",
+  bg: "#eff5f0",
+};
+const EMPTY_FEATURE = { icon: "", title: "", desc: "" };
+
+function productFeatures(product) {
+  if (Array.isArray(product?.features) && product.features.length > 0) {
+    return product.features.map((feature) => ({
+      icon: feature.icon || "",
+      title: feature.title || "",
+      desc: feature.desc || "",
+    }));
+  }
+
+  return [{ ...EMPTY_FEATURE }, { ...EMPTY_FEATURE }];
+}
 
 function selectedFiles(event) {
   return Array.from(event.target.files || []);
@@ -22,6 +42,15 @@ function ProductFormPage({ product, onCancel, onSave }) {
   const [platforms, setPlatforms] = useState(
     product?.developerInfo?.targetPlatforms || [],
   );
+  const [requiredFields, setRequiredFields] = useState({
+    name: product?.name || "",
+    type: product?.type || "",
+  });
+  const [colors, setColors] = useState(() => ({
+    ...DEFAULT_COLORS,
+    ...product?.colors,
+  }));
+  const [features, setFeatures] = useState(() => productFeatures(product));
 
   const handleFileChange = (field, event) => {
     setFiles((current) => ({ ...current, [field]: selectedFiles(event) }));
@@ -32,6 +61,23 @@ function ProductFormPage({ product, onCancel, onSave }) {
       current.includes(platform)
         ? current.filter((item) => item !== platform)
         : [...current, platform],
+    );
+  };
+
+  const handleRequiredFieldChange = (event) => {
+    const { name, value } = event.target;
+    setRequiredFields((current) => ({ ...current, [name]: value }));
+  };
+
+  const handleColorChange = (key, value) => {
+    setColors((current) => ({ ...current, [key]: value }));
+  };
+
+  const handleFeatureChange = (index, key, value) => {
+    setFeatures((current) =>
+      current.map((feature, featureIndex) =>
+        featureIndex === index ? { ...feature, [key]: value } : feature,
+      ),
     );
   };
 
@@ -46,6 +92,16 @@ function ProductFormPage({ product, onCancel, onSave }) {
       type: String(formData.get("type") || "").trim(),
       description: String(formData.get("description") || "").trim(),
       url: String(formData.get("url") || "").trim(),
+      colors: Object.fromEntries(
+        COLOR_KEYS.map((key) => [key, colors[key]]),
+      ),
+      features: features
+        .map((feature) => ({
+          icon: feature.icon.trim(),
+          title: feature.title.trim(),
+          desc: feature.desc.trim(),
+        }))
+        .filter((feature) => feature.icon || feature.title || feature.desc),
       developerInfo: {
         description: String(formData.get("developerDescription") || "").trim(),
         mode: String(formData.get("mode") || ""),
@@ -98,6 +154,7 @@ function ProductFormPage({ product, onCancel, onSave }) {
             <input
               defaultValue={product?.name || ""}
               name="name"
+              onChange={handleRequiredFieldChange}
               placeholder="e.g. Pick-A-Card"
               required
             />
@@ -107,6 +164,7 @@ function ProductFormPage({ product, onCancel, onSave }) {
             <input
               defaultValue={product?.type || ""}
               name="type"
+              onChange={handleRequiredFieldChange}
               placeholder="e.g. game"
               required
             />
@@ -133,6 +191,82 @@ function ProductFormPage({ product, onCancel, onSave }) {
 
         <div className="form-section-heading">
           <span className="form-section-heading__icon">02</span>
+          <div>
+            <h2>Product appearance</h2>
+            <p>Choose the four colors used by this product.</p>
+          </div>
+        </div>
+        <div className="product-form-grid product-color-grid">
+          {COLOR_KEYS.map((key) => (
+            <label className="field product-color-field" key={key}>
+              {key}
+              <input
+                aria-label={`${key} color`}
+                onChange={(event) => handleColorChange(key, event.target.value)}
+                type="color"
+                value={colors[key]}
+              />
+            </label>
+          ))}
+        </div>
+
+        <div className="form-section-heading">
+          <span className="form-section-heading__icon">03</span>
+          <div>
+            <h2>Product features</h2>
+            <p>Describe the features shown for this product.</p>
+          </div>
+        </div>
+        <div className="product-features">
+          {features.map((feature, index) => (
+            <fieldset className="product-feature" key={index}>
+              <legend>Feature {index + 1}</legend>
+              <label className="field">
+                Icon name
+                <input
+                  onChange={(event) =>
+                    handleFeatureChange(index, "icon", event.target.value)
+                  }
+                  placeholder="e.g. FaBrain"
+                  value={feature.icon}
+                />
+              </label>
+              <label className="field">
+                Title
+                <input
+                  onChange={(event) =>
+                    handleFeatureChange(index, "title", event.target.value)
+                  }
+                  placeholder="Feature title"
+                  value={feature.title}
+                />
+              </label>
+              <label className="field">
+                Description
+                <textarea
+                  onChange={(event) =>
+                    handleFeatureChange(index, "desc", event.target.value)
+                  }
+                  placeholder="Describe this feature..."
+                  rows="3"
+                  value={feature.desc}
+                />
+              </label>
+            </fieldset>
+          ))}
+          <button
+            className="button button--outline product-feature-add"
+            onClick={() =>
+              setFeatures((current) => [...current, { ...EMPTY_FEATURE }])
+            }
+            type="button"
+          >
+            Create new feature
+          </button>
+        </div>
+
+        <div className="form-section-heading">
+          <span className="form-section-heading__icon">04</span>
           <div>
             <h2>Product files</h2>
             <p>
@@ -203,7 +337,7 @@ function ProductFormPage({ product, onCancel, onSave }) {
         </div>
 
         <div className="form-section-heading">
-          <span className="form-section-heading__icon">03</span>
+          <span className="form-section-heading__icon">05</span>
           <div>
             <h2>Developer dossier</h2>
             <p>Technical details about the product and its implementation.</p>
@@ -350,7 +484,11 @@ function ProductFormPage({ product, onCancel, onSave }) {
           </button>
           <button
             className="button button--primary"
-            disabled={saving}
+            disabled={
+              saving ||
+              !requiredFields.name.trim() ||
+              !requiredFields.type.trim()
+            }
             type="submit"
           >
             {saving ? "Saving..." : isEditing ? "Save changes" : "Save product"}

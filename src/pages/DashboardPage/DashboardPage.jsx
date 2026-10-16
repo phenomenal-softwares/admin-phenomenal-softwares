@@ -1,12 +1,88 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
+  faBoxArchive,
+  faCircleCheck,
+  faCube,
+  faGamepad,
   faIndustry,
   faCheck,
+  faLayerGroup,
+  faScrewdriverWrench,
+  faWallet,
+  faCartShopping,
+  faBook,
+  faCirclePlay,
+  faUniversalAccess,
+  faBusinessTime,
+  faHouseUser,
+  faCross,
+  faUtensils,
+  faGear
 } from "@fortawesome/free-solid-svg-icons";
 import "./DashboardPage.css";
 
-function DashboardPage({ onViewProducts, productCount }) {
+const STATUS_CARDS = [
+  { label: "Active Development", icon: faLayerGroup, tone: "active" },
+  { label: "Maintenance", icon: faScrewdriverWrench, tone: "maintenance" },
+  { label: "Completed", icon: faCircleCheck, tone: "completed" },
+  { label: "Archived", icon: faBoxArchive, tone: "archived" },
+];
+
+function DashboardPage({ onViewProducts, productCount, products = [] }) {
+  const productTypes = products.reduce((types, product) => {
+    const type =
+      typeof product.type === "string" && product.type.trim()
+        ? product.type.trim()
+        : "Unspecified";
+    const key = type.toLocaleLowerCase();
+    const existing = types.get(key);
+    if (existing) {
+      existing.count += 1;
+    } else {
+      types.set(key, { label: type, count: 1 });
+    }
+    return types;
+  }, new Map());
+  const sortedProductTypes = [...productTypes.values()].sort((a, b) =>
+    a.label.localeCompare(b.label, undefined, { sensitivity: "base" }),
+  );
+  const productsByStatus = products.reduce(
+    (counts, product) => {
+      const rawStatus = product.developerInfo?.status;
+      const status =
+        typeof rawStatus === "string" ? rawStatus.trim().toLowerCase() : "";
+      if (status === "active development") counts["Active Development"] += 1;
+      if (status === "maintenance") counts.Maintenance += 1;
+      if (status === "completed") counts.Completed += 1;
+      if (status === "archived") counts.Archived += 1;
+      return counts;
+    },
+    {
+      "Active Development": 0,
+      Maintenance: 0,
+      Completed: 0,
+      Archived: 0,
+    },
+  );
+
+  const typeIcon = (type) => {
+    const normalizedType = type.toLowerCase();
+    if (normalizedType.includes("game")) return faGamepad;
+    if (normalizedType === "e-commerce") return faCartShopping;
+    if (normalizedType === "educational") return faBook;
+    if (normalizedType === "entertainment") return faCirclePlay;
+    if (normalizedType === "lifestyle") return faUniversalAccess;
+    if (normalizedType === "productivity") return faBusinessTime;
+    if (normalizedType === "real-estate") return faHouseUser;
+    if (normalizedType === "christian") return faCross;
+    if (normalizedType === "restaurant") return faUtensils;
+    if (normalizedType === "utility") return faGear;
+    if (normalizedType === "fintech") return faWallet;
+    
+    return faCube;
+  };
+
   return (
     <section className="page">
       <div className="page-heading">
@@ -54,6 +130,66 @@ function DashboardPage({ onViewProducts, productCount }) {
           </span>
         </article>
       </div>
+
+      <section
+        className="dashboard-breakdown"
+        aria-labelledby="product-type-heading"
+      >
+        <div className="section-heading dashboard-breakdown__heading">
+          <div>
+            <h2 id="product-type-heading">Products by type</h2>
+            <p>Catalogue totals grouped by product type.</p>
+          </div>
+        </div>
+        <div className="dashboard-stat-grid">
+          {sortedProductTypes.length ? (
+            sortedProductTypes.map(({ label, count }) => (
+              <article
+                className="dashboard-stat-card"
+                key={label.toLowerCase()}
+              >
+                <span className="dashboard-stat-card__icon" aria-hidden="true">
+                  <FontAwesomeIcon icon={typeIcon(label)} />
+                </span>
+                <span className="dashboard-stat-card__label">{label}</span>
+                <span className="dashboard-stat-card__count">{count}</span>
+              </article>
+            ))
+          ) : (
+            <p className="dashboard-breakdown__empty">
+              No product types to show yet.
+            </p>
+          )}
+        </div>
+      </section>
+
+      <section
+        className="dashboard-breakdown"
+        aria-labelledby="product-status-heading"
+      >
+        <div className="section-heading dashboard-breakdown__heading">
+          <div>
+            <h2 id="product-status-heading">Products by status</h2>
+            <p>Totals across each development status.</p>
+          </div>
+        </div>
+        <div className="dashboard-stat-grid dashboard-stat-grid--statuses">
+          {STATUS_CARDS.map(({ label, icon, tone }) => (
+            <article className="dashboard-stat-card" key={label}>
+              <span
+                className={`dashboard-stat-card__icon dashboard-stat-card__icon--${tone}`}
+                aria-hidden="true"
+              >
+                <FontAwesomeIcon icon={icon} />
+              </span>
+              <span className="dashboard-stat-card__label">{label}</span>
+              <span className="dashboard-stat-card__count">
+                {productsByStatus[label]}
+              </span>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <article className="welcome-card">
         <div className="welcome-card__copy">

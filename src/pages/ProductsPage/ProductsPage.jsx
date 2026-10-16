@@ -10,10 +10,9 @@ import {
   faEye,
   faPenToSquare,
   faTrashCan,
-  faXmark,
-  faArrowUpRightFromSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { useFirebase } from "../../context/FirebaseContext";
+import ProductDetails from "./ProductDetails/ProductDetails";
 import "./ProductsPage.css";
 
 const productAsset = (product, field) =>
@@ -135,13 +134,6 @@ function ProductsPage({
     (pageIndex + 1) * pageSize,
     filteredProducts.length,
   );
-
-  const selectedImage =
-    selectedProduct && productAsset(selectedProduct, "imagePrimary");
-  const selectedPhoneImage =
-    selectedProduct && productAsset(selectedProduct, "imagePhone");
-  const selectedReadMe =
-    selectedProduct && productAsset(selectedProduct, "readMe");
 
   return (
     <section className="page">
@@ -370,183 +362,15 @@ function ProductsPage({
       </div>
 
       {selectedProduct && (
-        <div
-          className="product-detail-backdrop"
-          onClick={() => setSelectedProduct(null)}
-          role="presentation"
-        >
-          <section
-            className="product-detail"
-            aria-labelledby="product-detail-title"
-            aria-modal="true"
-            onClick={(event) => event.stopPropagation()}
-            role="dialog"
-          >
-            <header className="product-detail__header">
-              <div>
-                <span className="eyebrow">PRODUCT DETAILS</span>
-                <h2 id="product-detail-title">{selectedProduct.name}</h2>
-              </div>
-              <button
-                className="icon-button"
-                onClick={() => setSelectedProduct(null)}
-                type="button"
-                aria-label="Close product details"
-              >
-                <FontAwesomeIcon icon={faXmark} />
-              </button>
-            </header>
-            <div className="product-detail__body">
-              {selectedImage && assetUrls[selectedImage] && (
-                <img
-                  className="product-detail__hero"
-                  src={assetUrls[selectedImage]}
-                  alt={`${selectedProduct.name} primary`}
-                />
-              )}
-              <p>
-                {selectedProduct.description ||
-                  "No product description provided."}
-              </p>
-              <dl className="product-detail__facts">
-                <div>
-                  <dt>Type</dt>
-                  <dd>{selectedProduct.type || "—"}</dd>
-                </div>
-                <div>
-                  <dt>URL</dt>
-                  <dd>
-                    {selectedProduct.url ? (
-                      <a
-                        href={selectedProduct.url}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        {selectedProduct.url}
-                      </a>
-                    ) : (
-                      "—"
-                    )}
-                  </dd>
-                </div>
-                <div>
-                  <dt>Status</dt>
-                  <dd>{selectedProduct.developerInfo?.status || "—"}</dd>
-                </div>
-                <div>
-                  <dt>Mode</dt>
-                  <dd>{selectedProduct.developerInfo?.mode || "—"}</dd>
-                </div>
-                <div>
-                  <dt>Platforms</dt>
-                  <dd>
-                    {selectedProduct.developerInfo?.targetPlatforms?.join(
-                      ", ",
-                    ) || "—"}
-                  </dd>
-                </div>
-                <div>
-                  <dt>Languages</dt>
-                  <dd>{selectedProduct.developerInfo?.languages || "—"}</dd>
-                </div>
-                <div>
-                  <dt>Framework</dt>
-                  <dd>{selectedProduct.developerInfo?.framework || "—"}</dd>
-                </div>
-                <div>
-                  <dt>Styling</dt>
-                  <dd>{selectedProduct.developerInfo?.styling || "—"}</dd>
-                </div>
-                <div>
-                  <dt>Animation</dt>
-                  <dd>{selectedProduct.developerInfo?.animation || "—"}</dd>
-                </div>
-                <div>
-                  <dt>Icons</dt>
-                  <dd>{selectedProduct.developerInfo?.icons || "—"}</dd>
-                </div>
-                <div>
-                  <dt>Hosting</dt>
-                  <dd>{selectedProduct.developerInfo?.hosting || "—"}</dd>
-                </div>
-                <div>
-                  <dt>Initial release</dt>
-                  <dd>
-                    {selectedProduct.developerInfo?.initialRelease || "—"}
-                  </dd>
-                </div>
-              </dl>
-              {selectedProduct.developerInfo?.description && (
-                <div className="product-detail__developer">
-                  <h3>Developer dossier</h3>
-                  <p>{selectedProduct.developerInfo.description}</p>
-                </div>
-              )}
-              {selectedPhoneImage && assetUrls[selectedPhoneImage] && (
-                <div className="product-detail__asset">
-                  <h3>Phone image</h3>
-                  <img
-                    src={assetUrls[selectedPhoneImage]}
-                    alt={`${selectedProduct.name} phone preview`}
-                  />
-                </div>
-              )}
-              {selectedProduct.gallery?.length > 0 && (
-                <div className="product-detail__asset">
-                  <h3>Gallery</h3>
-                  <div className="product-gallery">
-                    {selectedProduct.gallery.map(
-                      (path) =>
-                        assetUrls[path] && (
-                          <img
-                            key={path}
-                            src={assetUrls[path]}
-                            alt={`${selectedProduct.name} gallery`}
-                          />
-                        ),
-                    )}
-                  </div>
-                </div>
-              )}
-              {selectedReadMe && (
-                <div className="product-detail__readme">
-                  <h3>ReadMe</h3>
-                  {assetUrls[selectedReadMe] ? (
-                    <a
-                      href={assetUrls[selectedReadMe]}
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      Open ReadMe file 
-                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-                    </a>
-                  ) : (
-                    <span>{selectedReadMe}</span>
-                  )}
-                </div>
-              )}
-            </div>
-            <footer className="product-detail__actions">
-              <button
-                className="button button--outline"
-                onClick={() => setSelectedProduct(null)}
-                type="button"
-              >
-                Close
-              </button>
-              <button
-                className="button button--primary"
-                onClick={() => {
-                  onEditProduct(selectedProduct);
-                  setSelectedProduct(null);
-                }}
-                type="button"
-              >
-                Edit product
-              </button>
-            </footer>
-          </section>
-        </div>
+        <ProductDetails
+          assetUrls={assetUrls}
+          onClose={() => setSelectedProduct(null)}
+          onEdit={() => {
+            onEditProduct(selectedProduct);
+            setSelectedProduct(null);
+          }}
+          product={selectedProduct}
+        />
       )}
     </section>
   );

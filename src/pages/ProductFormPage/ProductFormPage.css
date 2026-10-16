@@ -87,6 +87,13 @@
   padding: 7px 9px;
 }
 
+.field input[type="color"] {
+  width: 100%;
+  height: 39px;
+  padding: 4px;
+  cursor: pointer;
+}
+
 .field textarea {
   min-height: 80px;
   padding: 10px 11px;
@@ -150,6 +157,45 @@
   accent-color: var(--kiwi);
 }
 
+.product-color-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.product-color-field {
+  text-transform: capitalize;
+}
+
+.product-features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 22px 0;
+}
+
+.product-feature {
+  display: grid;
+  min-width: 0;
+  gap: 14px;
+  margin: 0;
+  padding: 15px;
+  border: 1px solid #e3e9e3;
+  border-radius: 8px;
+}
+
+.product-feature legend {
+  padding: 0 5px;
+  color: #4f5b51;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.product-feature-add {
+  justify-self: start;
+  align-self: start;
+  min-height: 36px;
+  font-size: 10px;
+}
+
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -172,5 +218,13 @@
 
   .field--wide {
     grid-column: auto;
+  }
+
+  .product-color-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .product-features {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

@@ -61,6 +61,100 @@
   background: var(--success-light);
 }
 
+.dashboard-breakdown {
+  margin-bottom: 20px;
+}
+
+.dashboard-breakdown__heading {
+  margin-top: 22px;
+}
+
+.dashboard-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.dashboard-stat-grid--statuses {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.dashboard-stat-card {
+  position: relative;
+  display: grid;
+  min-height: 94px;
+  align-content: center;
+  gap: 8px;
+  padding: 16px 56px 16px 17px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+}
+
+.dashboard-stat-card__label {
+  overflow: hidden;
+  color: #68766d;
+  font-size: 11px;
+  font-weight: 550;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-stat-card__count {
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+  line-height: 1;
+}
+
+.dashboard-stat-card__icon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--kiwi-dark);
+  background: var(--kiwi-light);
+  font-size: 15px;
+  transform: translateY(-50%);
+}
+
+.dashboard-stat-card__icon--active {
+  color: #315f9b;
+  background: #e6f0ff;
+}
+
+.dashboard-stat-card__icon--maintenance {
+  color: #855b08;
+  background: #fff1d2;
+}
+
+.dashboard-stat-card__icon--completed {
+  color: var(--success);
+  background: var(--success-light);
+}
+
+.dashboard-stat-card__icon--archived {
+  color: #68746a;
+  background: #eef1ee;
+}
+
+.dashboard-breakdown__empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 16px;
+  border: 1px dashed var(--line);
+  border-radius: 9px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, .65);
+  font-size: 11px;
+}
+
 .welcome-card {
   position: relative;
   display: flex;
@@ -258,9 +352,20 @@
 }
 
 @media (max-width: 850px) {
+  .dashboard-stat-grid--statuses {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .welcome-card__art {
     width: 190px;
     margin-right: -20px;
     transform: scale(.7);
+  }
+}
+
+@media (max-width: 520px) {
+  .dashboard-stat-grid,
+  .dashboard-stat-grid--statuses {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
